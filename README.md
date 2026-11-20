@@ -1,15 +1,18 @@
 # Análisis de Fuga Financiera y Cancelaciones Hoteleras (SQL / Databricks)
 
-Proyecto desarrollado en **Databricks (Spark SQL)** para el holding **DataAndino**, enfocado en cuantificar pérdidas por cancelaciones de reservas y respaldar la renegociación de contratos con agencias de marketing[cite: 13].
+Proyecto en **Databricks (Spark SQL)** para el holding **DataAndino**, enfocado en auditar la calidad de datos, cuantificar pérdidas por cancelaciones y perfilar el comportamiento de reserva para renegociar contratos con agencias.
 
 ## Problema de Negocio
-* **Comisiones sin penalidad:** Pago de **USD 1.5** por reserva generada vía agencia, incluso si se cancela[cite: 13].
-* **Costo operativo hundido:** Pérdida de **USD 120** por cada cancelación con menos de 3 días de anticipación[cite: 13].
+* **Comisiones sin penalidad:** Pago de **USD 1.5** por reserva captada por agencias intermediarias (TA/TO), incluso si se cancela[cite: 9].
+* **Costo operativo hundido:** Pérdida de **USD 120** por cancelaciones realizadas con menos de 3 días de anticipación[cite: 9].
 
 ## Stack y Técnicas SQL
 * **Entorno:** Databricks (Spark SQL)
-* **Limpieza y DML:** `CREATE TABLE`, `INSERT INTO ... SELECT` y `UPDATE` con subconsultas para depurar errores de captura[cite: 3, 7, 10].
-* **Consultas y Modelado:** `INNER JOIN`, `LEFT JOIN` y segmentación condicional con `CASE WHEN` para auditar clientes y cuantificar el impacto financiero[cite: 1, 2, 4, 5, 13].
+* **Limpieza y DML:** `CREATE TABLE`, `INSERT INTO ... SELECT`, `UPDATE` con subconsultas y `DELETE` para depurar errores de captura y estandarizar registros.
+* **Modelado y Consultas:** `INNER JOIN`, `LEFT JOIN`, `FULL OUTER JOIN`, agregaciones y `CASE WHEN` para auditar comprobantes, detectar reservas sin ejecutivo asignado y evaluar riesgo por ventana de anticipación.
 
-## Resultado
-Estandarización de la base de reservas y cuantificación exacta de la fuga económica por canal para la toma de decisiones comerciales[cite: 13].
+## Hallazgos Clave
+* **Fuga en agencias (TA/TO):** Concentran la mayoría de reservas y cancelaciones sin penalidad por anulación.
+* **Indicadores de compromiso:** Huéspedes con hijos, solicitudes especiales o cambios en su reserva cancelan considerablemente menos.
+* **Riesgo por propiedad:** El costo promedio de cancelación es mayor en hoteles tipo Resort frente a los de ciudad; las cancelaciones tardías impiden la reventa del inventario.
+* **Recomendación:** Renegociar contratos bajo esquemas de reserva efectiva e implementar depósitos previos.
